@@ -1,0 +1,60 @@
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+}
+.bread{
+  width: 30em;
+  height: 5em;
+  background-color: #C08555;
+}
+
+.cakefilling{
+   width: 29em;
+   height: 2em;
+   line-height: 2em;
+   color: white;
+   max-width: 29em;
+   margin: 2px;
+   text-align: center;
+   font-weight: 800;
+}
+
+.bread1{
+    border-top-left-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.bread2{
+    border-top-left-radius: 150px;
+    border-top-right-radius: 150px;
+    border-bottom-left-radius: 500px;
+    border-bottom-right-radius: 500px;
+}
+
+.salad{
+    background-color: #9EEB52;
+    border-radius: 1000px 1000px;
+}
+
+.bacon{
+    background-color: #782724;
+    border-end-start-radius: 500px;
+    border-end-end-radius: 500px;
+    border-top-left-radius: 200px;
+    border-top-right-radius: 300px;
+}
+
+.meat{
+   background-color: #A53D43;
+   border-radius: 20px;
+}
+
+.cheese{
+   background-color: #F6D264;
+   border-top-left-radius: 200px;
+}

@@ -1,0 +1,38 @@
+.container{
+
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    height: max-content;
+    margin-bottom: 100px;
+    font-weight: 800;
+}
+.paymentTotalBox{
+
+    display: flex;
+    margin-bottom: 20px;
+    padding: 20px;
+    justify-content: space-between;
+    border: 1px solid rgba(10,10,10,0.2);
+}
+.actionsContainer{
+    
+   
+    border: 1px solid rgba(10,10,10,0.2);
+    
+}
+.actionBox{
+    display: flex;
+    width: 30em;
+    margin: 20px;
+    border-radius: 200px 200px;
+    justify-content: space-between;
+    height: 50px;
+    max-height: 50px;
+    font-weight: 800;
+    border-bottom: 1px solid rgba;
+}
+.actionButtonWrap{
+
+}

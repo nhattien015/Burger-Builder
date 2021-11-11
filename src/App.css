@@ -1,3 +1,4 @@
+@import '~antd/dist/antd.css';
 .App {
   text-align: center;
 }
@@ -35,4 +36,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.horizontalStyles{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+.horizontalStyles:before, .horizontalStyles:after{
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid;
+  margin: auto;
+}
+
+.horizontalStyles:before {
+  margin-right: 10px
+}
+.horizontalStyles:after {
+  margin-left: 10px
 }
