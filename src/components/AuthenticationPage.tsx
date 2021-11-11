@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState, FC } from 'react';
+import React, { ChangeEvent, useState, FC, memo } from 'react';
 import { Form, Modal, Input, Button, Checkbox } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import LoginPageStyles from './LoginPage.module.css';
 import { LoginFormModal, SignupFormModal } from '.'
 
-export const AuthenticationPage: FC = () => {
+let AuthenticationPage: FC = () => {
     const [isShowLogin, setIsShowLogin] = useState<boolean>(true);
     const [isShowSignUp, setIsShowSignUp] = useState<boolean>(false);
     // const onFinish = (values: any) => {
@@ -43,3 +43,6 @@ export const AuthenticationPage: FC = () => {
         </div>
     )
 }
+
+AuthenticationPage = memo(AuthenticationPage)
+export { AuthenticationPage } 
