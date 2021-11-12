@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Routes, Route} from 'react-router-dom';
-import { HomePage, AuthenticationPage, OrdersList } from '.';
+import { HomePage, AuthenticationPage, OrdersPage } from '.';
 export const Main : FC = () => {
     return (
        <div style={{marginTop: "2em"}}>
@@ -13,7 +13,7 @@ export const Main : FC = () => {
 
            </Route>
 
-           <Route path = '/orders' element={<OrdersList></OrdersList>}>
+           <Route path = '/orders' element={<OrdersPage></OrdersPage>}>
 
            </Route>
        </Routes>

@@ -7,6 +7,7 @@
     height: max-content;
     margin-bottom: 100px;
     font-weight: 800;
+    width: 30em;
 }
 .paymentTotalBox{
 
@@ -22,17 +23,30 @@
     border: 1px solid rgba(10,10,10,0.2);
     
 }
-.actionBox{
+.checkoutBox{
     display: flex;
-    width: 30em;
+    margin: 20px;
+    border-radius: 200px 200px;
+    font-weight: 800;
+    justify-content: center;
+    justify-content: space-between;
+}
+.actionBox{
+    user-select: none;
+    display: flex;
+    align-items: center;
     margin: 20px;
     border-radius: 200px 200px;
     justify-content: space-between;
     height: 50px;
     max-height: 50px;
     font-weight: 800;
-    border-bottom: 1px solid rgba;
 }
 .actionButtonWrap{
 
+}
+
+input::placeholder{
+    font-weight: 800;
+    color: rgba(10,10,10,0.5) !important;
 }

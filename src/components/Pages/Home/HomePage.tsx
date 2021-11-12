@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import {ProductPreview} from './ProductPreview';
-import {ProductActions} from './ProductActions';
+import {ProductPreview} from '../../ProductPreview/';
+import {ProductActions} from '../../ProductPreview/Actions/ProductActions';
 import homePageStyles from './HomePage.module.css';
 export const HomePage : FC = () => {
     return(

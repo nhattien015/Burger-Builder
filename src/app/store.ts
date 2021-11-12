@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-
+import orderSlice from '../features/makeCakeSlice'
 const store = configureStore({
     reducer: {
-        //Reducer here        
+        order: orderSlice     
     }
 })
 
