@@ -1,8 +1,7 @@
 import { FC, memo } from 'react';
 import {Form, Modal, Input, Button, Checkbox} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { useMemo } from 'react';
-import LoginPageStyles from './LoginPage.module.css';
+import LoginPageStyles from './AuthForm.module.css';
 interface LoginField{
     email: string,
     password: string

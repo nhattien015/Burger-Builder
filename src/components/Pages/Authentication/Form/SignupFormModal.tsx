@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
-import {Form, Modal, Input, Button, Checkbox} from 'antd';
+import {Form, Modal, Input, Button} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import LoginPageStyles from './LoginPage.module.css';
+import LoginPageStyles from './AuthForm.module.css';
 interface Props{
     isShowSignUp: boolean,
     setIsShowLogin: React.Dispatch<React.SetStateAction<boolean>>,

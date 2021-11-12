@@ -1,7 +1,14 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {Table} from 'antd';
-import './OrderList.css';
-const datas : any = [
+import './OrderPage.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app';
+interface row{
+    ingredients: string,
+    price: string
+}
+type rowsData = Array<row>;
+const datas : rowsData = [
     {
         ingredients: "Salad(1) Bacon(2) Cheese(1) Meat(1)",
         price: "10$"
@@ -40,7 +47,19 @@ const columns : any = [
         className: "theading"
     },
 ]
-const OrdersList : FC = () => {
+
+const rowsData : any = [
+
+]
+const OrdersPage : FC = () => {
+
+    // const orders = useSelector((state: RootState) => state.order.value );
+    // const rowData : rowsData = orders.map((order) => {
+    //     return {
+            
+    //     }
+    // })
+    const [rowsData, setRowsData] = useState({})
     return(
        <Table
        rowClassName={(record, index) => {
@@ -60,4 +79,4 @@ const OrdersList : FC = () => {
     )
 }
 
-export {OrdersList}
+export {OrdersPage}
