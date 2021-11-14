@@ -12,7 +12,7 @@ interface Props{
     orderHandle : () => void
 }
 export const OrderActions : FC<Props> = ({orderHandle}) =>{
-    const orders = useSelector((state: RootState) => state.order.value);
+    const orders = useSelector((state: RootState) => state.makeCake.value);
     const dispatch = useDispatch();
     // Array.from(orders.values()).forEach(({totalPrice}) => {
     //     payTotal += totalPrice;

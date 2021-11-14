@@ -1,10 +1,24 @@
 import {configureStore} from '@reduxjs/toolkit';
-import orderSlice from '../features/makeCakeSlice'
+import makeCakeSlice from '../features/makeCakeSlice'
+import authSlice from '../features/user/authSlice'
+import orderSlice from '../features/user/orderSlice';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga';
+
+
+const sagaMiddleware = createSagaMiddleware();
+
 const store = configureStore({
     reducer: {
-        order: orderSlice     
-    }
+      makeCake: makeCakeSlice,
+      auth: authSlice,
+      order: orderSlice
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
+    
 })
+
+sagaMiddleware.run(rootSaga);
 
 export {store}
 export type RootState = ReturnType<typeof store.getState>;

@@ -12,7 +12,7 @@ type ProductPreviewInfo = Array<{
 
 
 export const ProductPreview : FC = () => {
-  const orders = useSelector((state : RootState) => {return state.order.value})
+  const orders = useSelector((state : RootState) => {return state.makeCake.value})
   const initialProductPreviewInfo : ProductPreviewInfo = orders;
   const [productPreviewInfo, setProductPreviewInfo] = useState<ProductPreviewInfo>(initialProductPreviewInfo);
   useEffect(()=>{

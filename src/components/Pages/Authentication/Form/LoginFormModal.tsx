@@ -2,6 +2,8 @@ import { FC, memo } from 'react';
 import {Form, Modal, Input, Button, Checkbox} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import LoginPageStyles from './AuthForm.module.css';
+import { useDispatch } from 'react-redux';
+import {signin} from '../../../../features/user/authSlice'
 interface LoginField{
     email: string,
     password: string
@@ -28,6 +30,10 @@ let LoginFormModal : FC<Props> = ({isShowLogin, setIsShowLogin, setIsShowSignUp}
     }
     const closeModal = ()=>{
         setIsShowLogin(false);
+    }
+    const dispatch = useDispatch();
+    const dispatchLogin = () => {
+        dispatch(signin({email: form.getFieldValue("email"), password: form.getFieldValue("password"),returnSecureToken: true}))
     }
     return (
         <Modal title="Login" footer={null} visible={isShowLogin} onCancel={closeModal}>
@@ -63,7 +69,7 @@ let LoginFormModal : FC<Props> = ({isShowLogin, setIsShowLogin, setIsShowSignUp}
            </Form.Item>
 
            <Form.Item wrapperCol={{offset: 10, span: 19}}>
-                <Button type="primary" htmlType='submit' size={"large"}>
+                <Button onClick={()=>{dispatchLogin();}} type="primary" htmlType='submit' size={"large"}>
                     Sign In
                 </Button>
            </Form.Item>
