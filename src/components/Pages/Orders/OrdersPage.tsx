@@ -1,31 +1,15 @@
-import {FC, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {Table} from 'antd';
 import './OrderPage.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../app';
+import { useNavigate } from 'react-router';
+import {getUserOrder} from '../../../features/user/orderSlice';
 interface row{
     ingredients: string,
     price: string
 }
-type rowsData = Array<row>;
-const datas : rowsData = [
-    {
-        ingredients: "Salad(1) Bacon(2) Cheese(1) Meat(1)",
-        price: "10$"
-    },
-    {
-        ingredients: "Salad(1) Bacon(2) Cheese(1) Meat(1)",
-        price: "9$"
-    },
-    {
-        ingredients: "Salad(1) Bacon(2) Cheese(1) Meat(1)",
-        price: "5$"
-    },
-    {
-        ingredients: "Salad(1) Bacon(2) Cheese(1) Meat(1)",
-        price: "4$"
-    },
-]
+type rowsData = Array<row> | [];
 
 const columns : any = [
     {
@@ -59,9 +43,47 @@ const OrdersPage : FC = () => {
             
     //     }
     // })
-    const [rowsData, setRowsData] = useState({})
+    const userOrder = useSelector((state: RootState) => state.order.userOrder)
+    const navigate = useNavigate();
+    const getOrderFromState : () => rowsData =  useCallback(() => {
+      if(userOrder !== null){
+        return Object.keys(userOrder).map((orderKey: string | number ) => {
+          
+          const currentOrder =  userOrder[orderKey];
+          let ingredientsData = "";
+          if(currentOrder.ingredients){
+            Object.keys(currentOrder.ingredients).forEach((ingre)=>{
+              ingredientsData+= `${ingre}(${(currentOrder.ingredients as any)[ingre]}) `;
+            })
+          }
+          return {ingredients: ingredientsData, price: `${currentOrder.price}`}
+        })
+      }
+      else{
+        return []
+      }
+    },[userOrder])
+    const [userOrderRow, setUserOrderRow] = useState<rowsData>();
+    const dispatch = useDispatch();
+    const fetchData = useCallback(()=>{
+    if(localStorage.getItem("tokenId") !== null){
+      dispatch(getUserOrder({tokenId: localStorage.getItem("tokenId")}));
+      const rowData = getOrderFromState();
+      setUserOrderRow(rowData);
+    }
+      else{
+        navigate("/login");
+      }
+    }, [navigate, getUserOrder, dispatch, setUserOrderRow, userOrder])
+
+    useEffect(()=>{
+      //  fetchData();
+    },[userOrder])
     return(
+      <>
+      
        <Table
+       
        rowClassName={(record, index) => {
            if(index%2 === 0){
              return "even";
@@ -72,10 +94,11 @@ const OrdersPage : FC = () => {
        }}
        bordered={true}
 
-       dataSource={datas} 
+       dataSource={userOrderRow} 
        columns={columns}>
 
        </Table>
+       </>
     )
 }
 

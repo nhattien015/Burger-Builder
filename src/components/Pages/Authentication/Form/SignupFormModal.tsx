@@ -1,7 +1,10 @@
 import React, { FC, memo } from 'react';
 import {Form, Modal, Input, Button} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
+import {signup} from '../../../../features/user/authSlice'
 import LoginPageStyles from './AuthForm.module.css';
+import {useDispatch} from 'react-redux';
+
 interface Props{
     isShowSignUp: boolean,
     setIsShowLogin: React.Dispatch<React.SetStateAction<boolean>>,
@@ -10,13 +13,14 @@ interface Props{
 interface SignUpField{
     email: string,
     password: string,
-    repeatPassword: string
+    repeatpassword: string
 }
 let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp}) => {
     const [form] = useForm<SignUpField>();
     const onFinish = (values: any) => {
         
     }
+    let dispatch = useDispatch();
     const onFinishFailed = ()=> {
 
     }
@@ -67,7 +71,7 @@ let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp
                 
 
                 <Form.Item wrapperCol={{ offset: 10, span: 19 }}>
-                    <Button type="primary" htmlType='submit' size="large">
+                    <Button onClick={()=>{dispatch(signup(form.getFieldsValue()))}} type="primary" htmlType='submit' size="large">
                         Signup
                     </Button>
                 </Form.Item>

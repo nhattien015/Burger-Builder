@@ -1,4 +1,4 @@
-import {FC, useState, useEffect, useCallback} from 'react';
+import {FC, useState, useEffect, useCallback, memo} from 'react';
 import ProductActionsStyles from './ProductActions.module.css';
 import {FoodPartSchemaArray} from '../../../utils/schema';
 import {Button} from 'antd';
@@ -6,7 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../app';
 import { Order } from '../../../types/Order';
 import {CheckoutActions, OrderActions} from '.'
-const ProductActions : FC = ()=>{
+
+
+let ProductActions : FC = ()=>{
     const [isShowCheckoutForm, setIsShowCheckoutForm] = useState<boolean>(false);
     function orderHandle(){
         setIsShowCheckoutForm(true);
@@ -14,7 +16,7 @@ const ProductActions : FC = ()=>{
     function cancelOrderHandle(){
         setIsShowCheckoutForm(false);
     }
-    const orders = useSelector((state: RootState) => state.order.value);
+    const orders = useSelector((state: RootState) => state.makeCake.value);
     const dispatch = useDispatch();
     const [total, setTotal] = useState<number>(0);
     const getTotalPayment = useCallback((orders)=>{
@@ -37,12 +39,12 @@ const ProductActions : FC = ()=>{
                 <span>{total} {orders[0].currency}</span>
             </div>
             {
-              !isShowCheckoutForm ? <OrderActions orderHandle={orderHandle} /> : <CheckoutActions cancelOrderHandle={cancelOrderHandle}/>
+              !isShowCheckoutForm ? <OrderActions orderHandle={orderHandle} /> : <CheckoutActions total={total} cancelOrderHandle={cancelOrderHandle}/>
             }
             
             
         </div>
     )
 }
-
+ProductActions = memo(ProductActions);
 export {ProductActions};

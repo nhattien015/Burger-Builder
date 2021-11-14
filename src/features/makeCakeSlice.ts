@@ -12,8 +12,8 @@ const initialValues : Orders = {
         {name: 'Meat', amount: 1, totalPrice: Meat.price, currency: Meat.currency}
     ]
 }
-const orderSlice = createSlice({
-    name: "order",
+const makeCakeSlice = createSlice({
+    name: "make",
     initialState: initialValues,
     reducers: {
         more: (state, action: PayloadAction<FoodPart>) => {
@@ -35,6 +35,6 @@ const orderSlice = createSlice({
     }
 })
 
-export const {more, less} = orderSlice.actions;
+export const {more, less} = makeCakeSlice.actions;
 
-export default orderSlice.reducer;
+export default makeCakeSlice.reducer;
