@@ -81,15 +81,6 @@ const orderSlice = createSlice({
   name: 'order',
   initialState: initialUserOrderState,
   reducers: {
-     getUserOrder: (state, action: PayloadAction<UserOrderPayload>) => {
-        
-     },
-     getOrderUserSuccessHandle: (state, action: PayloadAction<UserOrderResponseSuccess>) => {
-         state.userOrder = action.payload;
-     },
-     getUserOrderFailedHandle: (state, action: PayloadAction<UserOrderResponseFailed>) => {
-       state.error = action.payload.error
-     },
      checkout: (state, action: PayloadAction<CheckoutPayload>) => {
       
      },
@@ -102,6 +93,6 @@ const orderSlice = createSlice({
   }
 })
 
-export const {getUserOrderFailedHandle, getOrderUserSuccessHandle, getUserOrder, checkout, checkoutFailedHandle, checkoutSuccessHandle} = orderSlice.actions;
+export const { checkout, checkoutFailedHandle, checkoutSuccessHandle} = orderSlice.actions;
 
 export default orderSlice.reducer;

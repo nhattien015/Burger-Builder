@@ -1,10 +1,10 @@
 import {FC, useCallback, useEffect, useState} from 'react';
+import axios from 'axios';
 import {Table} from 'antd';
 import './OrderPage.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../app';
 import { useNavigate } from 'react-router';
-import {getUserOrder} from '../../../features/user/orderSlice';
+import { ordersEndpoint } from '../../../contants/APIEnpoint';
+import {useSpring, animated} from 'react-spring';
 interface row{
     ingredients: string,
     price: string
@@ -32,56 +32,60 @@ const columns : any = [
     },
 ]
 
-const rowsData : any = [
-
-]
 const OrdersPage : FC = () => {
-
-    // const orders = useSelector((state: RootState) => state.order.value );
-    // const rowData : rowsData = orders.map((order) => {
-    //     return {
-            
-    //     }
-    // })
-    const userOrder = useSelector((state: RootState) => state.order.userOrder)
+    const animateProps = useSpring({
+      from: {
+        transform: "scaleX(0)"
+      },
+      to: {
+        transform: "scaleX(1)"
+      }
+    })
     const navigate = useNavigate();
-    const getOrderFromState : () => rowsData =  useCallback(() => {
+    const doFormatToRowDatas : (userOrder: any) => rowsData = (userOrder) => {
       if(userOrder !== null){
+        console.log(userOrder)
         return Object.keys(userOrder).map((orderKey: string | number ) => {
           
           const currentOrder =  userOrder[orderKey];
+          console.log(currentOrder, orderKey);
           let ingredientsData = "";
           if(currentOrder.ingredients){
             Object.keys(currentOrder.ingredients).forEach((ingre)=>{
               ingredientsData+= `${ingre}(${(currentOrder.ingredients as any)[ingre]}) `;
             })
           }
-          return {ingredients: ingredientsData, price: `${currentOrder.price}`}
+          return {ingredients: ingredientsData, price: `${currentOrder.price} $`}
         })
       }
       else{
         return []
       }
-    },[userOrder])
-    const [userOrderRow, setUserOrderRow] = useState<rowsData>();
-    const dispatch = useDispatch();
-    const fetchData = useCallback(()=>{
-    if(localStorage.getItem("tokenId") !== null){
-      dispatch(getUserOrder({tokenId: localStorage.getItem("tokenId")}));
-      const rowData = getOrderFromState();
-      setUserOrderRow(rowData);
     }
-      else{
-        navigate("/login");
-      }
-    }, [navigate, getUserOrder, dispatch, setUserOrderRow, userOrder])
+    const [userOrderRow, setUserOrderRow] = useState<rowsData>();
+    const fetchOrders = useCallback(()=>{
+      axios.get(`${ordersEndpoint}?auth=${localStorage.getItem("tokenId")}`).then(res=>{
+        const formatedRowData = doFormatToRowDatas(res.data);
+        setUserOrderRow(formatedRowData);
+      })
+      
+    }, [localStorage.getItem("tokenId")]);
+
+    const verifyUser = useCallback(()=>{
+        if(localStorage.getItem("tokenId") !== null){
+        }
+        else{
+          navigate("/login");
+        }
+    }, [localStorage.getItem("tokenId")])
 
     useEffect(()=>{
-      //  fetchData();
-    },[userOrder])
+      verifyUser();
+      fetchOrders();
+    },[fetchOrders, verifyUser])
     return(
       <>
-      
+      <animated.div style={animateProps}>
        <Table
        
        rowClassName={(record, index) => {
@@ -98,6 +102,7 @@ const OrdersPage : FC = () => {
        columns={columns}>
 
        </Table>
+       </animated.div>
        </>
     )
 }

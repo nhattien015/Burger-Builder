@@ -1,8 +1,5 @@
-import {take, takeEvery, takeLatest, put, call, fork} from 'redux-saga/effects'
+import {takeLatest, put, call} from 'redux-saga/effects'
 import { 
-  getUserOrder,
-  getOrderUserSuccessHandle,
-  getUserOrderFailedHandle,
   checkoutFailedHandle,
   checkoutSuccessHandle
 } 
@@ -18,21 +15,6 @@ interface UserOrderPayload{
 }
 
 
-function* requestGetUserOrder(action: PayloadAction<UserOrderPayload>): Generator<any>{
- try{
-     let res = yield call(API.get,`${ordersEndpoint}?auth=${action.payload.tokenId}`);
-     let perfectRes = res as any;
-     if(perfectRes.error){
-       yield put(getUserOrderFailedHandle(perfectRes.error))
-     }
-     else{
-       yield put(getOrderUserSuccessHandle(perfectRes))
-     }
-  }catch(err){
-
-  }
-    
-}
 
 function* requestCheckout(action: PayloadAction<CheckoutPayload>) : Generator<any>{
   try{
@@ -49,7 +31,6 @@ function* requestCheckout(action: PayloadAction<CheckoutPayload>) : Generator<an
  }
 }
 export function* watchOrderSaga(){
-     yield takeLatest(getUserOrder.type, requestGetUserOrder)
      yield takeLatest(checkout.type, requestCheckout)
 
 }
