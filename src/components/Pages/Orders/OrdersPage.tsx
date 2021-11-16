@@ -1,10 +1,12 @@
 import {FC, useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
-import {Table} from 'antd';
+import {message, Table} from 'antd';
 import './OrderPage.css';
 import { useNavigate } from 'react-router';
 import { ordersEndpoint } from '../../../contants/APIEnpoint';
 import {useSpring, animated} from 'react-spring';
+import { Skeleton } from 'antd';
+
 interface row{
     ingredients: string,
     price: string
@@ -62,11 +64,20 @@ const OrdersPage : FC = () => {
         return []
       }
     }
-    const [userOrderRow, setUserOrderRow] = useState<rowsData>();
+    const [userOrderRow, setUserOrderRow] = useState<rowsData>([]);
     const fetchOrders = useCallback(()=>{
-      axios.get(`${ordersEndpoint}?auth=${localStorage.getItem("tokenId")}`).then(res=>{
-        const formatedRowData = doFormatToRowDatas(res.data);
-        setUserOrderRow(formatedRowData);
+      fetch(`${ordersEndpoint}?auth=${localStorage.getItem("tokenId")}`).then(res=>{
+        return res.json();
+      }).then(dataRes=>{
+        if(dataRes.error){
+          message.error(dataRes.error);
+          localStorage.removeItem("tokenId");
+          navigate('/login');
+        }
+        else{
+          const formatedRowData = doFormatToRowDatas(dataRes);
+          setUserOrderRow(formatedRowData);
+        }
       })
       
     }, [localStorage.getItem("tokenId")]);
@@ -85,24 +96,29 @@ const OrdersPage : FC = () => {
     },[fetchOrders, verifyUser])
     return(
       <>
-      <animated.div style={animateProps}>
-       <Table
+      {userOrderRow.length < 0 ? <Skeleton/> : <animated.div style={animateProps}>
+              
+              <Table
+              
+              rowClassName={(record, index) => {
+                  if(index%2 === 0){
+                    return "even";
+                  }
+                  else{
+                   return "odd";
+                  }
+              }}
+              bordered={true}
        
-       rowClassName={(record, index) => {
-           if(index%2 === 0){
-             return "even";
-           }
-           else{
-            return "odd";
-           }
-       }}
-       bordered={true}
-
-       dataSource={userOrderRow} 
-       columns={columns}>
-
-       </Table>
-       </animated.div>
+              dataSource={userOrderRow} 
+              columns={columns}>
+       
+              </Table>
+              </animated.div>
+              
+      }
+      
+    
        </>
     )
 }

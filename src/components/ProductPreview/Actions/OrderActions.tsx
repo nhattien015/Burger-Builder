@@ -1,13 +1,16 @@
 import {FC, useEffect, useState, useCallback} from 'react';
 import ProductActionsStyles from './ProductActions.module.css';
 import {FoodPartSchemaArray} from '../../../utils/schema';
-import {Button} from 'antd';
+import { Button } from 'antd';
 import ButtonGroup from 'antd/lib/button/button-group';
 
 import {useSelector, useDispatch} from 'react-redux'
 import { RootState } from '../../../app';
 import {more, less} from '../../../features/makeCakeSlice'
 import { Order } from '../../../types/Order';
+
+import {useSpring, animated} from 'react-spring';
+
 interface Props{
     orderHandle : () => void
 }
@@ -31,9 +34,16 @@ export const OrderActions : FC<Props> = ({orderHandle}) =>{
     useEffect(()=>{
        setTotal(getTotalPayment(orders));
     },[orders])
-    
+    const stylesAnimate = useSpring({
+        from:{
+            transform: "translateX(-200px)"
+        },
+        to: {
+            transform: "translateX(0px)"
+        }
+    })         
     return(
-        <>
+        <animated.div style={stylesAnimate}>
             <div className={ProductActionsStyles.actionsContainer}>
             {/* Get state from Redux */}
              
@@ -57,9 +67,9 @@ export const OrderActions : FC<Props> = ({orderHandle}) =>{
             })}
             
             </div>
-            <Button type='primary' onClick={orderHandle} style={{marginTop: "20px"}} size='large'>
+            <Button type='primary' onClick={orderHandle} style={{width: "100%", maxWidth: "500px", marginTop: "20px"}} size='large'>
                   Checkout
             </Button>
-        </>
+        </animated.div>
     )
 }

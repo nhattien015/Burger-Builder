@@ -1,4 +1,3 @@
-import {history} from '../../utils/';
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
 import {message} from 'antd';
@@ -14,9 +13,7 @@ interface User{
 interface authState{
   user: User,
   error: authError | null,
-  signinLoading: boolean,
-  signoutLoading: boolean,
-  signupLoading: boolean,
+  isLoading: boolean,
   isLogin: boolean
 }
   interface authError{
@@ -43,9 +40,7 @@ const initialAuthState : authState = {
     refreshToken: null,
     },
     error: null,
-    signinLoading: false,
-    signoutLoading: false,
-    signupLoading: false,
+    isLoading: false,
     isLogin: false
 }
 
@@ -67,10 +62,10 @@ const userSlice = createSlice({
     initialState: initialAuthState,
     reducers: {
         signin: (state, action: PayloadAction<LoginPayload>) => {
-          console.log("SIng")
+          state.isLoading = true;
         },
         signup: (state, action: PayloadAction<SignupPayload>) => {
-          
+          state.isLoading = true;
         },
         signout: (state)=>{
            localStorage.removeItem('tokenId');
@@ -81,7 +76,7 @@ const userSlice = createSlice({
           console.log("kei")
           state.user = action.payload;
           state.error = initialAuthState.error;
-          state.signinLoading = false;
+          state.isLoading = false;
           localStorage.setItem('tokenId',`${state.user.idToken}`);
           localStorage.setItem('localId',`${action.payload.localId}`)
           message.success("Login success",10)
@@ -94,14 +89,14 @@ const userSlice = createSlice({
           state.error = action.payload;
           state.user = initialAuthState.user;
           message.error(state.error.message,10)
-          state.signinLoading = false
+          state.isLoading = false
         },
         signupFailedHandle: (state, action: PayloadAction<authError>) => {
           console.log(state, action.payload);
           state.error = action.payload;
           state.user = initialAuthState.user;
           message.error(state.error.message,10)
-          state.signinLoading = false
+          state.isLoading = false
         },
         signupSuccessHandle: (state) => {
           message.success("Sign up success!")
