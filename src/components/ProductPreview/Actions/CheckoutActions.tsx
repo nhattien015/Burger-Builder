@@ -8,6 +8,8 @@ import { checkout } from '../../../features/user/orderSlice'
 import { RootState } from '../../../app';
 import { Order } from '../../../types/Order';
 import {CheckoutPayload } from '../../../features/user/orderSlice';
+import { useSpring, animated } from 'react-spring';
+import { LoadingOutlined } from '@ant-design/icons';
 interface Props{
     cancelOrderHandle: () => void,
     total: number
@@ -25,12 +27,14 @@ interface CheckoutFields{
 
 export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
     const [form] = useForm<CheckoutFields>()
-    const [isValidForm, setValidForm] = useState<boolean>(true);
+    const [isValidForm, setValidForm] = useState<boolean>(false);
     const dispatch = useDispatch();
     const orders = useSelector((state: RootState) => state.makeCake.value);
     const navigate = useNavigate();
-    const checkoutHandle = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const checkoutHandle = async () => {
         if(isValidForm){
+            setIsLoading(true);
             if(localStorage.getItem("tokenId")){
                 const actionPayload : CheckoutPayload = {
                     ingredients: {
@@ -50,7 +54,9 @@ export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
                     userId: localStorage.getItem("localId") as string,
                     tokenId: localStorage.getItem("tokenId") as string
                   }
-                  dispatch(checkout(actionPayload))
+                  await dispatch(checkout(actionPayload))
+                  setIsLoading(false);
+                
             }
             else{
                navigate("/login");
@@ -76,8 +82,17 @@ export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
             setValidForm(false);
         }
     }
+
+    const stylesAnimate = useSpring({
+        from: {
+            transform: "translateX(200px)"
+        },
+        to: {
+            transform: "translateX(0)"
+        }
+    })
     return (
-        <>
+        <animated.div style={stylesAnimate}>
         
         <Form
         onFieldsChange={verifyForm}
@@ -122,13 +137,13 @@ export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
             </fieldset>
             
             <Button disabled={!isValidForm} block={true} type='primary' onClick={checkoutHandle} style={{marginTop: "20px"}} size='large'>
-                Order
+                { isLoading && <LoadingOutlined spin color='white'></LoadingOutlined>} Order
             </Button>
             <Button type='primary' danger={true} onClick={cancelOrderHandle} style={{marginTop: "20px"}} size='large'>
                 Go back
             </Button>
         </Form>
-        </>
+        </animated.div>
     )
 }
 

@@ -1,13 +1,19 @@
-import axios from 'axios';
 export default class API{
     static get(url: string) : Promise<any>{
         
             return new Promise<any>((resolve, reject)=>{
-                axios.get(url).then(data=>{
-                    resolve(data)
-                }).catch(err=>{
-                    reject(err);
-                })
+              fetch(url,{
+                headers: {
+                  "Accept": "application/json",
+                  "Content-type": "application/json"
+                },
+              }).then((res) => {
+                  return res.json();
+              }).then(data=>{ 
+                resolve(data);
+              }).catch(err=>{
+                reject(err);
+              })
             })
         
     }
