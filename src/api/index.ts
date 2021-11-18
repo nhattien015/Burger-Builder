@@ -18,7 +18,7 @@ export default class API{
         
     }
 
-    static post(url: string, body: any): Promise<any>{
+    static post(url: string, body: object): Promise<any>{
       return new Promise<any>((resolve, reject) => {
         fetch(url,{
           method: "POST",

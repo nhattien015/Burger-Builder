@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
 import {message} from 'antd';
-interface User{
-    kind?: string | null,
-    localId?: string | null,
-    email: string | null,
-    displayName: string,
-    idToken: string | null,
-    registered: boolean,
-    refreshToken: string | null
-}
+import { User } from '../../types/'
 interface authState{
   user: User,
   error: authError | null,
@@ -73,18 +65,17 @@ const userSlice = createSlice({
            state.isLogin = false;
         },
         signinSuccessHandle: (state, action: PayloadAction<User>) => {
-          console.log("kei")
           state.user = action.payload;
           state.error = initialAuthState.error;
           state.isLoading = false;
           localStorage.setItem('tokenId',`${state.user.idToken}`);
           localStorage.setItem('localId',`${action.payload.localId}`)
+          localStorage.setItem('user',JSON.stringify(state.user));
           message.success("Login success",10)
           state.isLogin = true;
 
        },
         signinFailedHandle: (state, action: PayloadAction<authError>) => {
-          console.log("hi")
           console.log(state, action.payload);
           state.error = action.payload;
           state.user = initialAuthState.user;
@@ -99,7 +90,7 @@ const userSlice = createSlice({
           state.isLoading = false
         },
         signupSuccessHandle: (state) => {
-          message.success("Sign up success!")
+          message.success("Sign up success!", 10)
         }
 
     }

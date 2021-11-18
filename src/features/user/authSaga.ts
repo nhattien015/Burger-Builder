@@ -10,7 +10,7 @@ import {
 from './authSlice'
 import API from '../../api';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { ingredientsEnpoint, ordersEndpoint, signinEndpoint, signupEndpoint} from '../../contants/APIEnpoint';
+import { ingredientsEnpoint, ordersEndpoint, signinEndpoint, signupEndpoint} from '../../constant/APIEnpoint';
 interface LoginPayload{
     email: string,
     password: string,
