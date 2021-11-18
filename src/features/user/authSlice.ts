@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { push } from 'connected-react-router';
-import {message} from 'antd';
+
+import { message } from 'antd';
 import { User } from '../../types/'
 interface authState{
   user: User,
