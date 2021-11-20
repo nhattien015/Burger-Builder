@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import {Form, Input, Button} from 'antd';
+import {Form, Input, Button, Spin} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import ProductActionsStyles from './ProductActions.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import {CheckoutPayload } from '../../../features/user/orderSlice';
 import { useSpring, animated } from 'react-spring';
 import { LoadingOutlined } from '@ant-design/icons';
 interface Props{
-    cancelOrderHandle: () => void,
+    goBackOrder: () => void,
     total: number
 }
 
@@ -25,7 +25,7 @@ interface CheckoutFields{
 }
 
 
-export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
+export const CheckoutActions : FC<Props> = ({goBackOrder, total}) => {
     const [form] = useForm<CheckoutFields>()
     const [isValidForm, setValidForm] = useState<boolean>(false);
     const dispatch = useDispatch();
@@ -55,6 +55,9 @@ export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
                     tokenId: localStorage.getItem("tokenId") as string
                   }
                   await dispatch(checkout(actionPayload))
+                  setTimeout(()=>{
+                      goBackOrder();
+                  }, 2000)
                   setIsLoading(false);
                 
             }
@@ -136,10 +139,10 @@ export const CheckoutActions : FC<Props> = ({cancelOrderHandle, total}) => {
                 </Form.Item>
             </fieldset>
             
-            <Button disabled={!isValidForm} block={true} type='primary' onClick={checkoutHandle} style={{marginTop: "20px"}} size='large'>
-                { isLoading && <LoadingOutlined spin color='white'></LoadingOutlined>} Order
+            <Button style={{minWidth: "82.6px", marginTop: "20px"}} disabled={!isValidForm} block={true} type='primary' onClick={checkoutHandle} size='large'>
+                { isLoading ? <Spin/> : "Order"} 
             </Button>
-            <Button type='primary' danger={true} onClick={cancelOrderHandle} style={{marginTop: "20px"}} size='large'>
+            <Button type='primary' danger={true} onClick={goBackOrder} style={{marginTop: "20px"}} size='large'>
                 Go back
             </Button>
         </Form>

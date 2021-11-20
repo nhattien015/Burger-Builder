@@ -41,16 +41,16 @@ export const ProductPreview : FC = () => {
           initialProductPreviewInfo.map((info, index) => {
             if(info.name === FoodPartSchemaObject.type.Salad.name && info.amount > 0){
               
-              return <Badge.Ribbon text={info.amount}><div className={`${productPreviewStyles.salad} ${productPreviewStyles.cakefilling}`}>Salad</div></Badge.Ribbon>
+              return <Badge.Ribbon key={index} text={info.amount}><div className={`${productPreviewStyles.salad} ${productPreviewStyles.cakefilling}`}>Salad</div></Badge.Ribbon>
             }
             else if(info.name === FoodPartSchemaObject.type.Bacon.name && info.amount > 0){
-              return <Badge.Ribbon text={info.amount}><div className={`${productPreviewStyles.bacon} ${productPreviewStyles.cakefilling}`}>Bacon</div></Badge.Ribbon>
+              return <Badge.Ribbon key={index} text={info.amount}><div className={`${productPreviewStyles.bacon} ${productPreviewStyles.cakefilling}`}>Bacon</div></Badge.Ribbon>
             }
             else if(info.name === FoodPartSchemaObject.type.Cheese.name && info.amount > 0){
-              return <Badge.Ribbon text={info.amount}><div className={`${productPreviewStyles.cheese} ${productPreviewStyles.cakefilling}`}>Cheese</div></Badge.Ribbon>
+              return <Badge.Ribbon key={index} text={info.amount}><div className={`${productPreviewStyles.cheese} ${productPreviewStyles.cakefilling}`}>Cheese</div></Badge.Ribbon>
             }
             else if(info.name === FoodPartSchemaObject.type.Meat.name && info.amount > 0){
-              return <Badge.Ribbon text={info.amount}><div className={`${productPreviewStyles.meat} ${productPreviewStyles.cakefilling}`}>Meat</div></Badge.Ribbon>
+              return <Badge.Ribbon key={index} text={info.amount}><div className={`${productPreviewStyles.meat} ${productPreviewStyles.cakefilling}`}>Meat</div></Badge.Ribbon>
             }
           })
         }

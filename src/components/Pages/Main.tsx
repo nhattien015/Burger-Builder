@@ -1,48 +1,48 @@
+import { message } from 'antd';
 import {FC, useEffect} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import { HomePage, AuthenticationPage, OrdersPage } from '.';
 import {getUserProfileEndpoint, IdentifyTookitAPIKEY} from '../../constant/APIEnpoint'
+import {signout} from '../../features/user/authSlice';
 import {User} from '../../types';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
 export const Main : FC = () => {
-  
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const checkTokenExpires = () => {
+        const targetUrl = `${getUserProfileEndpoint}?key=${IdentifyTookitAPIKEY}&idToken=${localStorage.getItem("tokenId")}`;
+        fetch(targetUrl,{
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            } 
+          }).then(res=>{
+              return res.json();
+            }).catch((err)=>{
+                
+            }).then((dataRes: any)=>{
+              //Expires in 3600 second
+              
+              const lastLogin = dataRes.users[0].lastLoginAt;
+              if(Number(new Date().getTime()) > Number(lastLogin) + 3600000){
+                localStorage.removeItem("tokenId");
+                dispatch(signout());
+              }
+            })
 
-    
-//     const checkTokenExpires = () => {
-//    let user: User | null = null;
-//     try{
-//       user = JSON.parse(localStorage.getItem("user") as string);
-//     }
-//     catch(err){
-//         console.log(err);
-//     }
-//     if(user){
-//       const targetUrl = `${getUserProfileEndpoint}?key=${IdentifyTookitAPIKEY}&idToken=${localStorage.getItem("tokenId")}`;
-//       fetch(targetUrl,{
-//           method: "POST",
-//           headers: {
-//             "Accept": "application/json",
-//             "Conten-type": "application/json"
-//           },
-//           body: JSON.stringify(
-//           {
-// 
-//           }
-//           )
-// 
-//         }).then((res)=>{
-//           return res.json();
-//         }).then(dataRes=>{
-//            console.log(dataRes);
-//         })
-// 
-//       }
-//     }
+        
+    }
     useEffect(()=>{
         // if(localStorage.getItem("tokenId") === "undefined"){
         //   localStorage.setItem("tokenId", "null")
         // }
-        // if(localStorage.getItem("tokenId")){
-        //   }
+         if(localStorage.getItem("tokenId")){
+
+            checkTokenExpires();
+          }
+        
       })
     return (
        <div style={{marginTop: "2em"}}>

@@ -49,12 +49,13 @@ interface SignupPayload{
     repeatpassword: string
 }
 
-const userSlice = createSlice({
+const authSlice = createSlice({
     name: "auth",
     initialState: initialAuthState,
     reducers: {
         signin: (state, action: PayloadAction<LoginPayload>) => {
           state.isLoading = true;
+          
         },
         signup: (state, action: PayloadAction<SignupPayload>) => {
           state.isLoading = true;
@@ -91,11 +92,12 @@ const userSlice = createSlice({
         },
         signupSuccessHandle: (state) => {
           message.success("Sign up success!", 10)
+          state.isLoading = false;
         }
 
     }
 })
 
-export const { signin, signup, signinFailedHandle, signout, signinSuccessHandle, signupFailedHandle, signupSuccessHandle } = userSlice.actions
+export const { signin, signup, signinFailedHandle, signout, signinSuccessHandle, signupFailedHandle, signupSuccessHandle } = authSlice.actions
 
-export default userSlice.reducer
+export default authSlice.reducer
