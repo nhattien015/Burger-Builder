@@ -23,7 +23,7 @@ export const Main : FC = () => {
             }).catch((err)=>{
                 
             }).then((dataRes: any)=>{
-              //Expirese is 3600 second
+              //Expires in 3600 second
               
               const lastLogin = dataRes.users[0].lastLoginAt;
               if(Number(new Date().getTime()) > Number(lastLogin) + 3600000){
