@@ -121,7 +121,7 @@ const OrdersPage : FC = () => {
               
               <Table
               style={{cursor: "pointer", userSelect: "none"}}
-              pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['5', '20', '30']}}
+              pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '20', '30']}}
               rowKey={(record) => record.key}
               expandable={expandable}     
               rowClassName={(record, index) => {

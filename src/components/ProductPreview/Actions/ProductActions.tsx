@@ -13,7 +13,7 @@ let ProductActions : FC = ()=>{
     function orderHandle(){
         setIsShowCheckoutForm(true);
     }
-    function cancelOrderHandle(){
+    function goBackOrder(){
         setIsShowCheckoutForm(false);
     }
     const orders = useSelector((state: RootState) => state.makeCake.value);
@@ -39,7 +39,7 @@ let ProductActions : FC = ()=>{
                 <span>{total} {orders[0].currency}</span>
             </div>
             {
-              !isShowCheckoutForm ? <OrderActions orderHandle={orderHandle} /> : <CheckoutActions total={total} cancelOrderHandle={cancelOrderHandle}/>
+              !isShowCheckoutForm ? <OrderActions orderHandle={orderHandle} /> : <CheckoutActions total={total} goBackOrder={goBackOrder}/>
             }
             
             

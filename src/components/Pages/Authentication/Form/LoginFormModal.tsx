@@ -1,9 +1,10 @@
 import { FC, memo } from 'react';
-import {Form, Modal, Input, Button, Checkbox} from 'antd';
+import {Form, Modal, Input, Button, Checkbox, Spin} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import LoginPageStyles from './AuthForm.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {signin} from '../../../../features/user/authSlice'
+import { RootState } from '../../../../app';
 interface LoginField{
     email: string,
     password: string
@@ -16,12 +17,8 @@ interface Props{
 
 let LoginFormModal : FC<Props> = ({isShowLogin, setIsShowLogin, setIsShowSignUp}) => {
     const [form] = useForm<LoginField>();
-    const onFinish = (values: any) => {
-        
-    }
-    const onFinishFailed = ()=> {
+    const isLoading = useSelector((state: RootState) => state.auth.isLoading)
 
-    }
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         console.log(ev.target.name)
         form.setFieldsValue({
@@ -44,8 +41,6 @@ let LoginFormModal : FC<Props> = ({isShowLogin, setIsShowLogin, setIsShowSignUp}
        labelCol={{span: 4}}
        wrapperCol={{span: 19}}
        initialValues={{remember: true}}
-       onFinish={onFinish}
-       onFinishFailed={onFinishFailed}
        autoComplete="off"
        >
            <Form.Item
@@ -69,8 +64,8 @@ let LoginFormModal : FC<Props> = ({isShowLogin, setIsShowLogin, setIsShowSignUp}
            </Form.Item>
 
            <Form.Item wrapperCol={{offset: 10, span: 19}}>
-                <Button onClick={()=>{dispatchLogin();}} type="primary" htmlType='submit' size={"large"}>
-                    Sign In
+                <Button style={{minWidth: "86.27px"}} onClick={()=>{dispatchLogin();}} type="primary" htmlType='submit' size={"large"}>
+                    {isLoading ? <Spin /> : "Sign In"}
                 </Button>
            </Form.Item>
            <h4 className={"horizontalStyles"}>Or</h4>

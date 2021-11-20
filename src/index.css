@@ -4,6 +4,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.ant-spin-dot-item {
+  background-color: white !important;
+  color: white !important;
+}
+.ant-spin-dot{
+  color: white !important;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

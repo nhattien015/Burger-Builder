@@ -48,7 +48,7 @@ export const OrderActions : FC<Props> = ({orderHandle}) =>{
             {/* Get state from Redux */}
              
             {FoodPartSchemaArray.map((value, index) => {
-                return <div className={ProductActionsStyles.actionBox}>
+                return <div key={index} className={ProductActionsStyles.actionBox}>
                     <div style={{width: "50%"}}>
                     {value.type.name} ({value.type.price}{value.type.currency})
                     </div>

@@ -1,9 +1,10 @@
 import React, { FC, memo } from 'react';
-import {Form, Modal, Input, Button} from 'antd';
+import {Form, Modal, Input, Button, Spin} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import {signup} from '../../../../features/user/authSlice'
 import LoginPageStyles from './AuthForm.module.css';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { RootState } from '../../../../app';
 
 interface Props{
     isShowSignUp: boolean,
@@ -17,9 +18,8 @@ interface SignUpField{
 }
 let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp}) => {
     const [form] = useForm<SignUpField>();
-    const onFinish = (values: any) => {
-        
-    }
+    const isLoading = useSelector((state: RootState) => state.auth.isLoading)
+        console.log(isLoading)
     let dispatch = useDispatch();
     const onFinishFailed = ()=> {
 
@@ -28,13 +28,12 @@ let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp
         setIsShowSignUp(false);
     }
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(ev.target.name)
         form.setFieldsValue({
             [ev.target.name]: ev.target.value
         })    
     }
     return (
-        <Modal title="Signup" footer={null} visible={isShowSignUp} onCancel={closeModal}>
+        <Modal destroyOnClose={true} title="Signup" footer={null} visible={isShowSignUp} onCancel={closeModal}>
             <Form
                 className={LoginPageStyles.form}
                 form={form}
@@ -42,7 +41,6 @@ let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 19 }}
                 initialValues={{ remember: true }}
-                onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
@@ -71,10 +69,10 @@ let SignupFormModal: FC<Props> = ({isShowSignUp, setIsShowLogin, setIsShowSignUp
                 
 
                 <Form.Item wrapperCol={{ offset: 10, span: 19 }}>
-                    <Button onClick={()=>{dispatch(signup(form.getFieldsValue()))}} type="primary" htmlType='submit' size="large">
-                        Signup
+               <Button style={{minWidth: "86.27px"}} onClick={()=>{dispatch(signup(form.getFieldsValue()))}} type="primary" htmlType='submit' size="large">
+                         {isLoading ? <Spin /> : "Signup"}
                     </Button>
-                </Form.Item>
+                  </Form.Item>
             </Form>
 
         </Modal>
