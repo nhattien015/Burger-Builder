@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form';
 import LoginPageStyles from './AuthForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {signin} from '../../../../features/user/authSlice'
-import { RootState } from '../../../../app';
+import { RootState } from '../../../../app/';
 interface LoginField{
     email: string,
     password: string

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import LoginPageStyles from './Form/AuthForm.module.css';
 import { useForm } from 'antd/lib/form/Form';
 import { LoginFormModal, SignupFormModal } from '.'
-import { RootState } from '../../../app';
+import { RootState } from '../../../app/';
 let AuthenticationPage: FC = () => {
     const [isShowLogin, setIsShowLogin] = useState<boolean>(true);
     const [isShowSignUp, setIsShowSignUp] = useState<boolean>(false);

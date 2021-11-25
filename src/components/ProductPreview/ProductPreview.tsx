@@ -4,7 +4,7 @@ import {FoodPart} from '../../types/Product';
 import {FoodPartSchemaObject} from '../../utils/schema';
 import {useSelector} from 'react-redux';
 import {Badge} from 'antd';
-import { RootState } from '../../app';
+import { RootState } from '../../app/';
 import {useSpring, animated, Transition} from 'react-spring';
 import {AnimatedComponent} from '../AnimatedComponent';
 type ProductPreviewInfo = Array<{

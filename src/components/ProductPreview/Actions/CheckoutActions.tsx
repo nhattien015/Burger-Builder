@@ -5,7 +5,7 @@ import ProductActionsStyles from './ProductActions.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { checkout } from '../../../features/user/orderSlice'
-import { RootState } from '../../../app';
+import { RootState } from '../../../app/';
 import { Order } from '../../../types/Order';
 import {CheckoutPayload } from '../../../features/user/orderSlice';
 import { useSpring, animated } from 'react-spring';
