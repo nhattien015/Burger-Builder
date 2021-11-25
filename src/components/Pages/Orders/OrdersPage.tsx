@@ -50,6 +50,7 @@ const OrdersPage : FC = () => {
         transform: "scaleX(1)"
       }
     })
+
     const navigate = useNavigate();
     const doFormatToRowDatas : (userOrder: any) => rowsData = (userOrder) => {
       if(userOrder !== null){

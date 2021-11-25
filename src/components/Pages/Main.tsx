@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import { HomePage, AuthenticationPage, OrdersPage } from '.';
 import {getUserProfileEndpoint, IdentifyTookitAPIKEY} from '../../constant/APIEnpoint'
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 export const Main : FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [userEmail, setUserEmail] = useState<string | null>(null);
     const checkTokenExpires = () => {
         const targetUrl = `${getUserProfileEndpoint}?key=${IdentifyTookitAPIKEY}&idToken=${localStorage.getItem("tokenId")}`;
         fetch(targetUrl,{
@@ -30,6 +31,8 @@ export const Main : FC = () => {
                 localStorage.removeItem("tokenId");
                 dispatch(signout());
               }
+              
+
             })
 
         

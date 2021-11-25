@@ -3,12 +3,14 @@ import HeaderBarStyles from './HeaderBar.module.css';
 import {Menu} from 'antd';
 import {NavLink} from 'react-router-dom'
 import {signout} from '../../features/user/authSlice'
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'antd'
 import { useNavigate } from 'react-router';
+import { RootState } from '../../app';
 export const HeaderBar : FC = ()=>{
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth.user);
     return (
         <div className={HeaderBarStyles.header}>
             <Menu mode={"horizontal"}>
@@ -34,6 +36,9 @@ export const HeaderBar : FC = ()=>{
                    </Button>
                </Menu.Item>}
             </Menu>
+            <h4>
+                   {user.email}
+            </h4>
         </div>
     )
 }

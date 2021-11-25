@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form';
 import {signup} from '../../../../features/user/authSlice'
 import LoginPageStyles from './AuthForm.module.css';
 import {useDispatch, useSelector} from 'react-redux';
-import { RootState } from '../../../../app';
+import { RootState } from '../../../../app/';
 
 interface Props{
     isShowSignUp: boolean,

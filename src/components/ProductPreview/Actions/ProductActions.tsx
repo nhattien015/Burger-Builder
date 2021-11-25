@@ -3,7 +3,7 @@ import ProductActionsStyles from './ProductActions.module.css';
 import {FoodPartSchemaArray} from '../../../utils/schema';
 import {Button} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../app';
+import { RootState } from '../../../app/';
 import { Order } from '../../../types/Order';
 import {CheckoutActions, OrderActions} from '.'
 

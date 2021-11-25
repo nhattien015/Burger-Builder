@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import ButtonGroup from 'antd/lib/button/button-group';
 
 import {useSelector, useDispatch} from 'react-redux'
-import { RootState } from '../../../app';
+import { RootState } from '../../../app/';
 import {more, less} from '../../../features/makeCakeSlice'
 import { Order } from '../../../types/Order';
 
