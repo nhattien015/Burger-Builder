@@ -25,10 +25,15 @@ export const Main : FC = () => {
                 
             }).then((dataRes: any)=>{
               //Expires in 3600 second
-              
-              const lastLogin = dataRes.users[0].lastLoginAt;
+              console.log(dataRes)
+              if(!dataRes.error){
+                const lastLogin = dataRes.users[0].lastLoginAt;
               if(Number(new Date().getTime()) > Number(lastLogin) + 3600000){
                 localStorage.removeItem("tokenId");
+                dispatch(signout());
+              }
+              }
+              else{
                 dispatch(signout());
               }
               

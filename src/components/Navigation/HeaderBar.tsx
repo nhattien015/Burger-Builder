@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import HeaderBarStyles from './HeaderBar.module.css';
 import {Menu} from 'antd';
 import {NavLink} from 'react-router-dom'
@@ -7,10 +7,38 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'antd'
 import { useNavigate } from 'react-router';
 import { RootState } from '../../app';
+import { getUserProfileEndpoint, IdentifyTookitAPIKEY } from '../../constant/APIEnpoint';
 export const HeaderBar : FC = ()=>{
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [usernameInfo, setUsernameInfo] = useState<string>("");
+
   const user = useSelector((state: RootState) => state.auth.user);
+  const getUserName = ()=>{
+    const targetUrl = `${getUserProfileEndpoint}?key=${IdentifyTookitAPIKEY}&idToken=${localStorage.getItem("tokenId")}`;
+    fetch(targetUrl,{
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        } 
+      }).then(res=>{
+          return res.json();
+        }).catch((err)=>{
+            
+        }).then((dataRes: any)=>{
+          //Expires in 3600 second
+          
+          console.log(dataRes);
+          if(!dataRes.error){
+              setUsernameInfo(dataRes.users[0].email)
+          }
+
+        })
+  }
+  useEffect(()=>{
+      getUserName();
+  })
     return (
         <div className={HeaderBarStyles.header}>
             <Menu mode={"horizontal"}>
@@ -37,7 +65,7 @@ export const HeaderBar : FC = ()=>{
                </Menu.Item>}
             </Menu>
             <h4>
-                   {user.email}
+                   {usernameInfo}
             </h4>
         </div>
     )
